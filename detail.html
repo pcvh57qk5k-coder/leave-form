@@ -1,92 +1,391 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>请假详情</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>日常请假详情</title>
   <style>
-    .form-group { margin: 15px 0; }
-    label { display: block; margin-bottom: 5px; }
-    input { width: 100%; padding: 8px; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+      padding-top: 44px;
+    }
+    
+    /* 顶部导航栏 */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 44px;
+      background: white;
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      border-bottom: 1px solid #e5e5e5;
+      z-index: 100;
+    }
+    
+    .header-left {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .header-title {
+      flex: 1;
+      text-align: center;
+      font-weight: bold;
+      font-size: 17px;
+    }
+    
+    .header-right {
+      width: 30px;
+      height: 30px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    
+    /* 表单项 */
+    .form-section {
+      background: white;
+      margin-bottom: 10px;
+      padding: 10px 15px;
+    }
+    
+    .section-title {
+      padding: 10px 0;
+      color: #666;
+      font-size: 14px;
+      background: #f5f5f5;
+    }
+    
+    .form-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .form-label {
+      color: #666;
+      width: 90px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .form-label.required::before {
+      content: "*";
+      color: #e54d42;
+      margin-right: 2px;
+    }
+    
+    .form-value {
+      flex: 1;
+      color: #333;
+    }
+    
+    /* 单选按钮 */
+    .radio-group {
+      display: flex;
+      align-items: center;
+    }
+    
+    .radio-item {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+    }
+    
+    .radio {
+      width: 20px;
+      height: 20px;
+      border: 1px solid #ccc;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 5px;
+    }
+    
+    .radio-inner {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #00aaff;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    
+    .radio-checked .radio-inner {
+      opacity: 1;
+    }
+    
+    /* 底部状态栏 */
+    .status-bar {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 30px;
+      background: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-top: 1px solid #eee;
+      font-size: 12px;
+      color: #00aaff;
+    }
   </style>
 </head>
 <body>
-  <h1>请假详情</h1>
+  <!-- 顶部导航栏 -->
+  <div class="header">
+    <div class="header-left">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M15 18L9 12L15 6" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <div class="header-title">日常请假详情</div>
+    <div class="header-right">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="12" cy="12" r="1" fill="#000"/>
+        <circle cx="12" cy="5" r="1" fill="#000"/>
+        <circle cx="12" cy="19" r="1" fill="#000"/>
+      </svg>
+    </div>
+  </div>
   
-  <!-- 可编辑表单 -->
-  <form id="editForm">
-    <div class="form-group">
-      <label>学号</label>
-      <input type="text" id="studentId" value="2025903015" readonly>
+  <!-- 请假信息 -->
+  <div class="form-section">
+    <div class="section-title">请假信息</div>
+    
+    <div class="form-row">
+      <div class="form-label required">学期</div>
+      <div class="form-value">2025-2026学年第一学期</div>
     </div>
     
-    <div class="form-group">
-      <label>姓名</label>
-      <input type="text" id="name" value="甘自成">
+    <div class="form-row">
+      <div class="form-label required">请假时间</div>
+      <div class="form-value">2025-12-06 08:33 至 2025-12-06 17:00</div>
     </div>
     
-    <div class="form-group">
-      <label>请假时间</label>
-      <input type="text" id="time" value="2025-12-30 8:00至2025-12-30 24:00">
+    <div class="form-row">
+      <div class="form-label">共计</div>
+      <div class="form-value">0天8小时</div>
     </div>
     
-    <div class="form-group">
-      <label>请假时长</label>
-      <input type="text" id="duration" value="0天16小时">
+    <div class="form-row">
+      <div class="form-label required">请假类型</div>
+      <div class="form-value">校外</div>
     </div>
     
-    <div class="form-group">
-      <label>请假原因</label>
-      <input type="text" id="reason" value="校外:外出培训">
+    <div class="form-row">
+      <div class="form-label required">请假原因</div>
+      <div class="form-value">周末外出</div>
     </div>
     
-    <button type="submit">保存修改</button>
-  </form>
-
-  <script>
-    // 1. 获取 URL 中的 ID
-    const urlParams = new URLSearchParams(window.location.search);
-    const recordId = urlParams.get('id');
+    <div class="form-row">
+      <div class="form-label">详细说明</div>
+      <div class="form-value">周末外出</div>
+    </div>
     
-    // 2. 模拟数据（实际项目中可替换为真实数据）
-    const mockData = {
-      "1": {
-        studentId: "2025903015",
-        name: "甘自成",
-        time: "2025-12-30 8:00至2025-12-30 24:00",
-        duration: "0天16小时",
-        reason: "校外:外出培训"
-      },
-      "2": {
-        studentId: "2025903015",
-        name: "甘自成",
-        time: "2025-05-17 12:00至2025-05-17 17:00",
-        duration: "0天5小时",
-        reason: "校外:周末外出"
-      }
-    };
+    <div class="form-row">
+      <div class="form-label">本人移动电话</div>
+      <div class="form-value">15550405002</div>
+    </div>
     
-    // 3. 根据 ID 加载数据
-    if (mockData[recordId]) {
-      const data = mockData[recordId];
-      document.getElementById('studentId').value = data.studentId;
-      document.getElementById('name').value = data.name;
-      document.getElementById('time').value = data.time;
-      document.getElementById('duration').value = data.duration;
-      document.getElementById('reason').value = data.reason;
-    }
+    <div class="form-row">
+      <div class="form-label required">是否已告知监护人</div>
+      <div class="form-value">
+        <div class="radio-group">
+          <div class="radio-item">
+            <div class="radio radio-checked">
+              <div class="radio-inner"></div>
+            </div>
+            <span>是</span>
+          </div>
+          <div class="radio-item">
+            <div class="radio">
+              <div class="radio-inner"></div>
+            </div>
+            <span>否</span>
+          </div>
+        </div>
+      </div>
+    </div>
     
-    // 4. 保存功能（示例：仅控制台输出）
-    document.getElementById('editForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const formData = {
-        studentId: document.getElementById('studentId').value,
-        name: document.getElementById('name').value,
-        time: document.getElementById('time').value,
-        duration: document.getElementById('duration').value,
-        reason: document.getElementById('reason').value
-      };
-      console.log("保存的数据:", formData);
-      alert("修改已保存！（实际项目需对接后端）");
-    });
-  </script>
+    <div class="form-row">
+      <div class="form-label">监护人姓名</div>
+      <div class="form-value">甘小春</div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-label">监护人电话</div>
+      <div class="form-value">13177535163</div>
+    </div>
+  </div>
+  
+  <!-- 外出信息 -->
+  <div class="form-section">
+    <div class="section-title">外出信息</div>
+    
+    <div class="form-row">
+      <div class="form-label required">是否离校</div>
+      <div class="form-value">
+        <div class="radio-group">
+          <div class="radio-item">
+            <div class="radio radio-checked">
+              <div class="radio-inner"></div>
+            </div>
+            <span>是</span>
+          </div>
+          <div class="radio-item">
+            <div class="radio">
+              <div class="radio-inner"></div>
+            </div>
+            <span>否</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-label required">是否离开廊坊</div>
+      <div class="form-value">
+        <div class="radio-group">
+          <div class="radio-item">
+            <div class="radio">
+              <div class="radio-inner"></div>
+            </div>
+            <span>是</span>
+          </div>
+          <div class="radio-item">
+            <div class="radio radio-checked">
+              <div class="radio-inner"></div>
+            </div>
+            <span>否</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-label required">外出地点</div>
+      <div class="form-value">河北省廊坊市安次区</div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-label">外出详细地点</div>
+      <div class="form-value">安次万达</div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-label required">外出时间</div>
+      <div class="form-value">2025-12-06 08:00 至2025-12-06 17:33</div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-label required">外出方式(去)</div>
+      <div class="form-value">网约车</div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-label required">外出方式(回)</div>
+      <div class="form-value">网约车</div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-label required">是否结伴同行</div>
+      <div class="form-value">
+        <div class="radio-group">
+          <div class="radio-item">
+            <div class="radio">
+              <div class="radio-inner"></div>
+            </div>
+            <span>是</span>
+          </div>
+          <div class="radio-item">
+            <div class="radio radio-checked">
+              <div class="radio-inner"></div>
+            </div>
+            <span>否</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- 请假材料 -->
+  <div class="form-section">
+    <div class="section-title">请假材料</div>
+    
+    <div class="form-row">
+      <div class="form-label">材料说明</div>
+      <div class="form-value"></div>
+    </div>
+    
+    <div class="form-row">
+      <div class="form-label">上传材料</div>
+      <div class="form-value"></div>
+    </div>
+  </div>
+  
+  <!-- 请假承诺 -->
+  <div class="form-section">
+    <div class="section-title">请假承诺</div>
+  </div>
+  
+  <!-- 销假 -->
+  <div class="form-section">
+    <div class="section-title">销假</div>
+  </div>
+  
+  <!-- 备注 -->
+  <div class="form-section">
+    <div class="section-title">备注</div>
+  </div>
+  
+  <!-- 上传图片 -->
+  <div class="form-section">
+    <div class="section-title">上传图片</div>
+  </div>
+  
+  <!-- 状态 -->
+  <div class="form-section">
+    <div class="form-row">
+      <div class="form-label">状态</div>
+      <div class="form-value">已销假</div>
+    </div>
+  </div>
+  
+  <!-- 撤销/销假人 -->
+  <div class="form-section">
+    <div class="form-row">
+      <div class="form-label">撤销\销假人</div>
+      <div class="form-value">刘冰</div>
+    </div>
+  </div>
+  
+  <!-- 撤销/销假时间 -->
+  <div class="form-section">
+    <div class="form-row">
+      <div class="form-label">撤销\销假时间</div>
+      <div class="form-value">2025-12-11 14:04</div>
+    </div>
+  </div>
+  
+  <!-- 底部状态栏 -->
+  <div class="status-bar">您正在使用VPN</div>
 </body>
 </html>
