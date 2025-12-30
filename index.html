@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>请假申请</title>
+  <meta name="format-detection" content="telephone=no">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    }
+    
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+      line-height: 1.5;
+      font-size: 15px;
+      padding-bottom: 80px;
+    }
+    
+    .container {
+      padding-top: 44px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    /* 导航栏 */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 44px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      z-index: 100;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    
+    .navbar-back {
+      width: 20px;
+      height: 20px;
+      margin-right: 15px;
+      position: relative;
+      cursor: pointer;
+    }
+    
+    .navbar-back::before {
+      content: '';
+      position: absolute;
+      top: 9px;
+      left: 5px;
+      width: 10px;
+      height: 1px;
+      background: #333;
+      transform: rotate(45deg);
+    }
+    
+    .navbar-back::after {
+      content: '';
+      position: absolute;
+      top: 9px;
+      left: 5px;
+      width: 10px;
+      height: 1px;
+      background: #333;
+      transform: rotate(-45deg);
+    }
+    
+    .navbar-title {
+      font-size: 17px;
+      font-weight: 600;
+      flex: 1;
+      text-align: center;
+    }
+    
+    .navbar-actions {
+      display: flex;
+      gap: 15px;
+    }
+    
+    .action-btn {
+      font-size: 15px;
+      color: #1677ff;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+    
+    /* 表单卡片 */
+    .card {
+      background: white;
+      border-radius: 10px;
+      margin: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+      overflow: hidden;
+    }
+    
+    .card-header {
+      padding: 15px;
+      background: #f8f9fa;
+      border-bottom: 1px solid #eee;
+      font-weight: 500;
+      color: #1890ff;
+    }
+    
+    .form-group {
+      padding: 15px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .form-group:last-child {
+      border-bottom: none;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: #333;
+      display: flex;
+      align-items: center;
+    }
+    
+    .form-label.required::before {
+      content: '*';
+      color: #ff4d4f;
+      margin-right: 4px;
+    }
+    
+    .form-control {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid #d9d9d9;
+      border-radius: 6px;
+      font-size: 15px;
+      color: #333;
+      background: white;
+      transition: border-color 0.3s;
+    }
+    
+    .form-control:focus {
+      border-color: #1890ff;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+    }
+    
+    .form-textarea {
+      min-height: 100px;
+      resize: vertical;
+      padding: 12px;
+    }
+    
+    .time-group {
+      display: flex;
+      gap: 12px;
+    }
+    
+    .time-input {
+      flex: 1;
+    }
+    
+    .time-label {
+      font-size: 13px;
+      color: #999;
+      margin-top: 4px;
+      display: block;
+    }
+    
+    /* 状态提示 */
+    .status-alert {
+      background-color: #fff0f0;
+      color: #e64553;
+      padding: 12px 15px;
+      font-size: 14px;
+      border-radius: 6px;
+      margin: 0 12px 12px;
+      display: flex;
+      align-items: flex-start;
+    }
+    
+    .status-alert-icon {
+      width: 18px;
+      height: 18px;
+      background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23e64553" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>') no-repeat center;
+      background-size: 18px;
+      margin-right: 8px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    
+    /* 底部按钮 */
+    .footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      max-width: 600px;
+      padding: 10px 15px;
+      background: white;
+      border-top: 1px solid #eee;
+      display: flex;
+      justify-content: center;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.08);
+    }
+    
+    .submit-btn {
+      width: 95%;
+      padding: 14px 0;
+      background: linear-gradient(to right, #1677ff, #1890ff);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 17px;
+      font-weight: 500;
+      box-shadow: 0 2px 6px rgba(24, 144, 255, 0.3);
+      transition: all 0.3s;
+    }
+    
+    .submit-btn:active {
+      transform: translateY(1px);
+      box-shadow: 0 1px 3px rgba(24, 144, 255, 0.3);
+    }
+    
+    .submit-btn:disabled {
+      background: #d9d9d9;
+      color: #fff;
+      box-shadow: none;
+      cursor: not-allowed;
+    }
+    
+    /* 企业微信样式 */
+    .wx-container {
+      padding: 20px 15px;
+      text-align: center;
+      color: #8c8c8c;
+      font-size: 13px;
+    }
+    
+    .wx-logo {
+      width: 32px;
+      height: 32px;
+      background: #07c160;
+      border-radius: 50%;
+      margin: 0 auto 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 16px;
+    }
+    
+    .current-time {
+      text-align: center;
+      color: #8c8c8c;
+      font-size: 13px;
+      margin: 10px 0;
+    }
+    
+    /* 响应式调整 */
+    @media (max-width: 375px) {
+      .container {
+        padding: 0;
+      }
+      
+      .card {
+        margin: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- 导航栏 -->
+    <div class="navbar">
+      <div class="navbar-back"></div>
+      <div class="navbar-title">请假申请</div>
+      <div class="navbar-actions">
+        <button class="action-btn">保存</button>
+        <button class="action-btn">提交</button>
+      </div>
+    </div>
+
+    <!-- 状态提示 -->
+    <div class="status-alert">
+      <div class="status-alert-icon"></div>
+      <div>当前状态不能请假或有请假未完成！请先处理已存在的请假记录</div>
+    </div>
+
+    <!-- 请假表单 -->
+    <div class="card">
+      <div class="card-header">个人信息</div>
+      
+      <div class="form-group">
+        <label class="form-label required">姓名</label>
+        <input type="text" class="form-control" value="甘自成" placeholder="请输入姓名">
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label required">学号</label>
+        <input type="text" class="form-control" value="2025903015" placeholder="请输入学号" maxlength="12">
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="card-header">请假信息</div>
+      
+      <div class="form-group">
+        <label class="form-label required">请假时间</label>
+        <div class="time-group">
+          <div class="time-input">
+            <input type="datetime-local" class="form-control" value="2025-12-30T08:00">
+            <span class="time-label">开始时间</span>
+          </div>
+          <div class="time-input">
+            <input type="datetime-local" class="form-control" value="2025-12-30T20:00">
+            <span class="time-label">结束时间</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label required">请假类型</label>
+        <select class="form-control">
+          <option value="校外">校外</option>
+          <option value="校内" selected>校内</option>
+          <option value="事假">事假</option>
+          <option value="病假">病假</option>
+        </select>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label required">请假原因</label>
+        <textarea class="form-control form-textarea" placeholder="请详细说明请假原因，例如：身体不适、参加重要会议等">身体不适，需要去医院就诊</textarea>
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">紧急联系人</label>
+        <input type="text" class="form-control" value="王老师 13800138000" placeholder="姓名 电话">
+      </div>
+      
+      <div class="form-group">
+        <label class="form-label">附件</label>
+        <div style="background:#f8f9fa; padding:12px; border-radius:6px; text-align:center; color:#8c8c8c; border:1px dashed #d9d9d9;">
+          + 点击上传证明材料（病假单、会议通知等）
+        </div>
+      </div>
+    </div>
+    
+    <div class="current-time">当前时间：2025-12-30 12:42:35</div>
+    
+    <div class="wx-container">
+      <div class="wx-logo">企</div>
+      <p>该页面在企业微信中打开效果最佳</p>
+      <p>自动获取企业身份信息，数据安全有保障</p>
+    </div>
+  </div>
+  
+  <!-- 底部按钮 -->
+  <div class="footer">
+    <button class="submit-btn">提交请假申请</button>
+  </div>
+
+  <script>
+    // 简单的表单验证
+    document.querySelector('.submit-btn').addEventListener('click', function() {
+      const name = document.querySelector('input[placeholder="请输入姓名"]').value.trim();
+      const studentId = document.querySelector('input[placeholder="请输入学号"]').value.trim();
+      const reason = document.querySelector('textarea').value.trim();
+      
+      if (!name) {
+        alert('请输入姓名');
+        return;
+      }
+      
+      if (!studentId) {
+        alert('请输入学号');
+        return;
+      }
+      
+      if (!reason) {
+        alert('请输入请假原因');
+        return;
+      }
+      
+      // 模拟提交成功
+      alert('请假申请已提交！\n班主任将在24小时内审批');
+      
+      // 实际项目中这里应该是AJAX请求
+      // this.disabled = true;
+      // this.textContent = '提交中...';
+    });
+    
+    // 保存按钮功能
+    document.querySelectorAll('.action-btn')[0].addEventListener('click', function() {
+      alert('草稿已保存！\n可在"我的请假"中继续编辑');
+    });
+    
+    // 返回按钮功能
+    document.querySelector('.navbar-back').addEventListener('click', function() {
+      if (confirm('确定要放弃编辑并返回吗？')) {
+        history.back();
+      }
+    });
+    
+    // 动态更新当前时间
+    function updateTime() {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, '0');
+      const day = String(now.getDate()).padStart(2, '0');
+      const hours = String(now.getHours()).padStart(2, '0');
+      const minutes = String(now.getMinutes()).padStart(2, '0');
+      const seconds = String(now.getSeconds()).padStart(2, '0');
+      
+      document.querySelector('.current-time').textContent = 
+        `当前时间：${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    }
+    
+    // 每秒更新时间
+    setInterval(updateTime, 1000);
+    updateTime();
+  </script>
+</body>
+</html>
