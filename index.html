@@ -77,8 +77,10 @@
       margin-bottom: 10px;
       padding: 15px;
       position: relative;
+      min-height: 300px;
     }
     
+    /* 修正1: 栏目文字黑色，个人信息灰色 */
     .item-row {
       display: flex;
       justify-content: space-between;
@@ -86,18 +88,38 @@
     }
     
     .item-label {
-      color: #666;
+      color: #000; /* 栏目文字黑色 */
       width: 80px;
+      font-weight: normal;
     }
     
     .item-value {
       flex: 1;
-      color: #333;
+      color: #666; /* 个人信息灰色 */
+      display: flex;
+      align-items: center;
     }
     
+    /* 可编辑字段 */
+    .editable {
+      display: inline-block;
+      min-width: 100px;
+      padding: 2px 5px;
+      border: 1px solid transparent;
+      border-radius: 3px;
+    }
+    
+    .editable:focus {
+      border: 1px solid #00aaff;
+      outline: none;
+      background-color: #f8f9fa;
+    }
+    
+    /* 修正3: 查看详情在学号右侧 */
     .view-detail {
       color: #00aaff;
       text-decoration: none;
+      margin-left: 10px;
       display: flex;
       align-items: center;
     }
@@ -108,34 +130,31 @@
       font-size: 16px;
     }
     
-    /* 状态标签 */
+    /* 修正2: 待销假/已销假标签 */
     .status-tag {
       position: absolute;
-      right: -10px;
       top: 15px;
-      transform: rotate(45deg);
-      padding: 15px 5px;
-      color: white;
-      font-size: 12px;
-      text-align: center;
+      right: -15px;
       width: 60px;
       height: 60px;
-      line-height: 1.2;
+      background: #ff9900; /* 待销假橙色 */
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transform: rotate(45deg);
+      font-size: 12px;
       z-index: 1;
     }
     
-    .status-pending {
-      background: linear-gradient(135deg, #ff9900 0%, #ff6a00 100%);
-    }
-    
     .status-completed {
-      background: linear-gradient(135deg, #9c27b0 0%, #7b1fa2 100%);
+      background: #9c27b0; /* 已销假紫色 */
     }
     
-    /* 请假条按钮 */
+    /* 修正4: 请假条在销假状态下方 */
     .apply-btn {
       display: block;
-      width: 80%;
+      width: 90%;
       margin: 15px auto 0;
       padding: 12px 0;
       background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
@@ -159,6 +178,13 @@
       font-size: 17px;
       font-weight: bold;
       z-index: 99;
+    }
+    
+    /* 修正3: 详情链接样式调整 */
+    .detail-container {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
     }
   </style>
 </head>
@@ -188,72 +214,143 @@
   
   <!-- 请假列表 -->
   <div class="leave-item">
+    <!-- 修正3: 学号行 - 查看详情在右侧 -->
     <div class="item-row">
       <div class="item-label">学号</div>
-      <div class="item-value">2025903015</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="2025903015" readonly>
+        <div class="detail-container">
+          <a href="detail.html?id=1" class="view-detail">查看详情</a>
+        </div>
+      </div>
     </div>
+    
     <div class="item-row">
       <div class="item-label">姓名</div>
-      <div class="item-value">甘自成</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="甘自成" readonly>
+      </div>
     </div>
+    
     <div class="item-row">
       <div class="item-label">请假时间</div>
-      <div class="item-value">2025-12-30 8:00至2025-12-30 24:00</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="2025-12-30 8:00至2025-12-30 24:00" readonly>
+      </div>
     </div>
+    
     <div class="item-row">
       <div class="item-label">请假时长</div>
-      <div class="item-value">0天16小时</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="0天16小时" readonly>
+      </div>
     </div>
+    
     <div class="item-row">
       <div class="item-label">是否续假</div>
-      <div class="item-value">否</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="否" readonly>
+      </div>
     </div>
+    
     <div class="item-row">
       <div class="item-label">请假原因</div>
-      <div class="item-value">校外:外出培训</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="校外:外出培训" readonly>
+      </div>
     </div>
+    
     <div class="item-row">
       <div class="item-label">销假状态</div>
-      <div class="item-value"></div>
+      <div class="item-value">
+        <input type="text" class="editable" value="" readonly>
+      </div>
     </div>
-    <a href="detail.html?id=1" class="view-detail">查看详情</a>
-    <div class="status-tag status-pending">待销假</div>
+    
+    <!-- 修正4: 请假条在销假状态下方 -->
+    <button class="apply-btn">请假条</button>
+    
+    <!-- 修正2: 状态标签位置和样式 -->
+    <div class="status-tag">待销假</div>
   </div>
   
   <div class="leave-item">
+    <!-- 修正3: 学号行 - 查看详情在右侧 -->
     <div class="item-row">
       <div class="item-label">学号</div>
-      <div class="item-value">2025903015</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="2025903015" readonly>
+        <div class="detail-container">
+          <a href="detail.html?id=2" class="view-detail">查看详情</a>
+        </div>
+      </div>
     </div>
+    
     <div class="item-row">
       <div class="item-label">姓名</div>
-      <div class="item-value">甘自成</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="甘自成" readonly>
+      </div>
     </div>
+    
     <div class="item-row">
       <div class="item-label">请假时间</div>
-      <div class="item-value">2025-05-17 12:00至2025-05-17 17:00</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="2025-05-17 12:00至2025-05-17 17:00" readonly>
+      </div>
     </div>
+    
     <div class="item-row">
       <div class="item-label">请假时长</div>
-      <div class="item-value">0天5小时</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="0天5小时" readonly>
+      </div>
     </div>
+    
     <div class="item-row">
       <div class="item-label">是否续假</div>
-      <div class="item-value">否</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="否" readonly>
+      </div>
     </div>
+    
     <div class="item-row">
       <div class="item-label">请假原因</div>
-      <div class="item-value">校外:周末外出</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="校外:周末外出" readonly>
+      </div>
     </div>
+    
     <div class="item-row">
       <div class="item-label">请假状态</div>
-      <div class="item-value">已销假</div>
+      <div class="item-value">
+        <input type="text" class="editable" value="已销假" readonly>
+      </div>
     </div>
-    <a href="detail.html?id=2" class="view-detail">查看详情</a>
+    
+    <!-- 修正4: 请假条在销假状态下方 -->
+    <button class="apply-btn">请假条</button>
+    
+    <!-- 修正2: 状态标签位置和样式 -->
     <div class="status-tag status-completed">已销假</div>
   </div>
   
-  <button class="apply-btn">请假条</button>
   <button class="submit-btn">提交续假</button>
+  
+  <script>
+    // 使字段可编辑（点击时）
+    document.querySelectorAll('.editable').forEach(input => {
+      input.addEventListener('click', function() {
+        if (this.readOnly) {
+          this.readOnly = false;
+          this.focus();
+        }
+      });
+      
+      input.addEventListener('blur', function() {
+        this.readOnly = true;
+      });
+    });
+  </script>
 </body>
 </html>
