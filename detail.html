@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>请假详情</title>
+  <style>
+    .form-group { margin: 15px 0; }
+    label { display: block; margin-bottom: 5px; }
+    input { width: 100%; padding: 8px; box-sizing: border-box; }
+  </style>
+</head>
+<body>
+  <h1>请假详情</h1>
+  
+  <!-- 可编辑表单 -->
+  <form id="editForm">
+    <div class="form-group">
+      <label>学号</label>
+      <input type="text" id="studentId" value="2025903015" readonly>
+    </div>
+    
+    <div class="form-group">
+      <label>姓名</label>
+      <input type="text" id="name" value="甘自成">
+    </div>
+    
+    <div class="form-group">
+      <label>请假时间</label>
+      <input type="text" id="time" value="2025-12-30 8:00至2025-12-30 24:00">
+    </div>
+    
+    <div class="form-group">
+      <label>请假时长</label>
+      <input type="text" id="duration" value="0天16小时">
+    </div>
+    
+    <div class="form-group">
+      <label>请假原因</label>
+      <input type="text" id="reason" value="校外:外出培训">
+    </div>
+    
+    <button type="submit">保存修改</button>
+  </form>
+
+  <script>
+    // 1. 获取 URL 中的 ID
+    const urlParams = new URLSearchParams(window.location.search);
+    const recordId = urlParams.get('id');
+    
+    // 2. 模拟数据（实际项目中可替换为真实数据）
+    const mockData = {
+      "1": {
+        studentId: "2025903015",
+        name: "甘自成",
+        time: "2025-12-30 8:00至2025-12-30 24:00",
+        duration: "0天16小时",
+        reason: "校外:外出培训"
+      },
+      "2": {
+        studentId: "2025903015",
+        name: "甘自成",
+        time: "2025-05-17 12:00至2025-05-17 17:00",
+        duration: "0天5小时",
+        reason: "校外:周末外出"
+      }
+    };
+    
+    // 3. 根据 ID 加载数据
+    if (mockData[recordId]) {
+      const data = mockData[recordId];
+      document.getElementById('studentId').value = data.studentId;
+      document.getElementById('name').value = data.name;
+      document.getElementById('time').value = data.time;
+      document.getElementById('duration').value = data.duration;
+      document.getElementById('reason').value = data.reason;
+    }
+    
+    // 4. 保存功能（示例：仅控制台输出）
+    document.getElementById('editForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const formData = {
+        studentId: document.getElementById('studentId').value,
+        name: document.getElementById('name').value,
+        time: document.getElementById('time').value,
+        duration: document.getElementById('duration').value,
+        reason: document.getElementById('reason').value
+      };
+      console.log("保存的数据:", formData);
+      alert("修改已保存！（实际项目需对接后端）");
+    });
+  </script>
+</body>
+</html>
